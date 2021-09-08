@@ -14,7 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User inliu(Long msrl) {
+    public User init(Long msrl) {
         long epochTime = LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond();
 
         User.UserBuilder user = User.builder();
