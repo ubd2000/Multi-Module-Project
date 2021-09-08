@@ -1,6 +1,8 @@
 package com.rest.multimoduleproject.user.service;
 
+import com.rest.multimoduleproject.user.dto.UserDto;
 import com.rest.multimoduleproject.user.entity.User;
+import com.rest.multimoduleproject.user.mapper.UserMapper;
 import com.rest.multimoduleproject.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,11 @@ import java.time.ZoneId;
 public class UserService {
 
     private final UserRepository userRepository;
+
+    public User save(UserDto.Request userDto) {
+        User user = UserMapper.instance.toEntity(userDto);
+        return userRepository.save(user);
+    }
 
     public User init(Long msrl) {
         long epochTime = LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond();

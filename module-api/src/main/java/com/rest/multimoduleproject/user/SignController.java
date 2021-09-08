@@ -30,7 +30,7 @@ public class SignController {
 
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
     @PostMapping(value = "/signup")
-    public User signUp(UserDto userDto) {
-        return null;
+    public User signUp(UserDto.Request userDto) {
+        return userService.save(userDto);
     }
 }
