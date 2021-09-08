@@ -1,0 +1,84 @@
+buildscript {
+    ext {
+        springBootVersion = '2.5.4'
+        queryDslVersion = '4.4.0'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.rest'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'org.springframework.boot:spring-boot-starter-web-services'
+        implementation group: 'org.modelmapper', name: 'modelmapper', version: '2.3.8'
+        implementation 'org.mapstruct:mapstruct:1.4.2.Final'
+//        implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+//        annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
+        //Mapstruct 사용 중 Builder를 사용하기 위해선 아래 binding 추가 해야 됨.
+//        annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+        //mapstruct-processor 이후 lombok processor가 위치해야 Builder 정상 작동.
+        annotationProcessor 'org.projectlombok:lombok'
+        //Gradle 5이상 부터 annotationProcessor , compoleOnly 등.. 어노테이션을 구별해서 추가해야함.(안그럴 시 Lombok Compile Error 발생)
+        compileOnly 'org.projectlombok:lombok'
+
+        //Test에서 lombok 사용하고 싶으면 아래 추가
+//    testCompileOnly 'org.projectlombok:lombok'
+//    testAnnotationProcessor 'org.projectlombok:lombok'
+
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        runtimeOnly 'com.h2database:h2'
+        annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+        testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    }
+}
+
+project(':module-domain') {
+    // common 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        // QueryDSL
+        implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+        annotationProcessor(
+                "javax.persistence:javax.persistence-api",
+                "javax.annotation:javax.annotation-api",
+                "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+    }
+}
+
+project(':module-api') {
+    // user 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
+    dependencies {
+        implementation 'io.springfox:springfox-swagger2:2.6.1'
+        implementation 'io.springfox:springfox-swagger-ui:2.6.1'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation project(':module-domain')
+    }
+}

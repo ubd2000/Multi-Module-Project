@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+bootJar { enabled = false }
+jar { enabled = true }
+
+group 'com.rest'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+}
+
+// QueryDSL
+sourceSets {
+    main {
+        java {
+            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
+        }
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
