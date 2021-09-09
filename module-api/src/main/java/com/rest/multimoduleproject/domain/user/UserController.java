@@ -1,10 +1,15 @@
-package com.rest.multimoduleproject.user;
+package com.rest.multimoduleproject.domain.user;
 
 
-import com.rest.multimoduleproject.user.dto.UserDto;
-import com.rest.multimoduleproject.user.entity.User;
-import com.rest.multimoduleproject.user.repository.UserRepository;
-import com.rest.multimoduleproject.user.service.UserService;
+import com.rest.multimoduleproject.domain.user.dto.UserDto;
+import com.rest.multimoduleproject.domain.user.entity.User;
+import com.rest.multimoduleproject.domain.user.repository.UserRepository;
+import com.rest.multimoduleproject.domain.user.service.UserService;
+import com.rest.multimoduleproject.exception.CUserNotFoundException;
+import com.rest.multimoduleproject.response.CommonResult;
+import com.rest.multimoduleproject.response.ListResult;
+import com.rest.multimoduleproject.response.SingleResult;
+import com.rest.multimoduleproject.response.service.ResponseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -23,11 +28,18 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final ResponseService responseService;
 
     @ApiOperation(value = "회원 리스트 조회", notes = "모든 회원을 조회한다.")
     @GetMapping(value = "/users")
-    public List<UserDto> findAllUser() {
-        return null;
+    public ListResult<UserDto> findAllUser() {
+        return responseService.getListResult(userService.findAllUser());
+    }
+
+    @ApiOperation(value = "회원 단건 조회", notes = "회원을 조회한다.")
+    @GetMapping(value = "/user/{userId}")
+    public SingleResult<UserDto> findUserById(@PathVariable Long userId) throws CUserNotFoundException {
+        return responseService.getSingleResult(userService.findUserById(userId));
     }
 
     @ApiOperation(value = "회원 수정", notes = "회원정보를 수정한다.")

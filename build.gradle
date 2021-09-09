@@ -3,6 +3,7 @@ buildscript {
         springBootVersion = '2.5.4'
         queryDslVersion = '4.4.0'
         mapstructVersion = '1.4.2.Final'
+        lombokVersion = "1.18.20"
     }
     repositories {
         mavenCentral()
@@ -62,26 +63,26 @@ project(':module-domain') {
                 'javax.annotation:javax.annotation-api',
                 "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
 
-        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
-        implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-        annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-        //Mapstruct 사용 중 Builder를 사용하기 위해선 아래 binding 추가 해야 됨.
-        annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
-        //mapstruct-processor 이후 lombok processor가 위치해야 Builder 정상 작동.
-        annotationProcessor 'org.projectlombok:lombok'
         //Gradle 5이상 부터 annotationProcessor , compoleOnly 등.. 어노테이션을 구별해서 추가해야함.(안그럴 시 Lombok Compile Error 발생)
-        compileOnly 'org.projectlombok:lombok'
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+
+        annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+        //Mapstruct 사용 중 Builder를 사용하기 위해선 아래에 lombok, binding 추가 해야 정상작동
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+
     }
 }
 
 project(':module-api') {
     // user 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
     dependencies {
+        implementation "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
         implementation 'io.springfox:springfox-swagger2:2.6.1'
         implementation 'io.springfox:springfox-swagger-ui:2.6.1'
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        annotationProcessor 'org.projectlombok:lombok'
-        compileOnly 'org.projectlombok:lombok'
         implementation project(':module-domain')
     }
 }

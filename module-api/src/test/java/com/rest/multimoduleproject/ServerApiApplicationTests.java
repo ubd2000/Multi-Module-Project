@@ -1,21 +1,10 @@
 package com.rest.multimoduleproject;
 
-import com.rest.multimoduleproject.user.entity.User;
-import com.rest.multimoduleproject.user.repository.UserRepository;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-
-import java.util.stream.IntStream;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -23,7 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 //@Transactional
 class ServerApiApplicationTests {
 
-    @Autowired
+   /* @Autowired
     private MockMvc mockMvc;
 
     @Autowired
@@ -92,6 +81,6 @@ class ServerApiApplicationTests {
                     .name("dakseawe" + i).build();
             userRepository.save(user);
         });
-    }
+    }*/
 
 }

@@ -1,16 +1,14 @@
-package com.rest.multimoduleproject.user.entity;
+package com.rest.multimoduleproject.domain.user.entity;
 
 import lombok.*;
 
 import javax.persistence.*;
 
 @Entity // jpa entity임을 알립니다.
-@Getter // user 필드값의 getter를 자동으로 생성합니다.
-@Setter
-//@NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
+@Getter
 @Builder // builder를 사용할수 있게 합니다.
+@NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
+@AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
 @Table(name = "user") // 'user' 테이블과 매핑됨을 명시
 public class User {
 

@@ -1,10 +1,12 @@
-package com.rest.multimoduleproject.user.mapper;
+package com.rest.multimoduleproject.domain.user.mapper;
 
 
-import com.rest.multimoduleproject.user.dto.UserDto;
-import com.rest.multimoduleproject.user.entity.User;
+import com.rest.multimoduleproject.domain.user.dto.UserDto;
+import com.rest.multimoduleproject.domain.user.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+
+import java.util.List;
 
 /*
  * Mapstruct 사용 시 DTO 와 Entity 맵핑정보가 모두 동일해야 됨.
@@ -17,6 +19,8 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
+    List<UserDto> toDto(List<User> user);
+    UserDto toDto(User user);
     User toEntity(UserDto.Request userDto);
     User toEntity(UserDto userDto);
 

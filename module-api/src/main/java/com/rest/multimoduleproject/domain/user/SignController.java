@@ -1,9 +1,9 @@
-package com.rest.multimoduleproject.user;
+package com.rest.multimoduleproject.domain.user;
 
-import com.rest.multimoduleproject.user.dto.UserDto;
-import com.rest.multimoduleproject.user.entity.User;
-import com.rest.multimoduleproject.user.repository.UserRepository;
-import com.rest.multimoduleproject.user.service.UserService;
+import com.rest.multimoduleproject.domain.user.dto.UserDto;
+import com.rest.multimoduleproject.domain.user.entity.User;
+import com.rest.multimoduleproject.domain.user.repository.UserRepository;
+import com.rest.multimoduleproject.domain.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,14 @@ public class SignController {
 //        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getMsrl()), user.getRoles()));
 //    }
 
+
+
+    /**
+     * 사용자 회원가입을 처리한다.
+     *
+     * @param userDto : 사용자 입력 정보
+     * @return : com.rest.multimoduleproject.domain.user.entity.User
+    **/
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
     @PostMapping(value = "/signup")
     public User signUp(UserDto.Request userDto) {

@@ -1,10 +1,11 @@
-package com.rest.multimoduleproject.user.dto;
+package com.rest.multimoduleproject.domain.user.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@Setter
+@Builder
 public class UserDto {
 
     private Long msrl;
@@ -23,7 +24,9 @@ public class UserDto {
     @Getter
     @Setter
     public static class Response {
-
+        private String uid;
+        private String password;
+        private String name;
     }
 
 }
