@@ -3,7 +3,7 @@ buildscript {
         springBootVersion = '2.5.4'
         queryDslVersion = '4.4.0'
         mapstructVersion = '1.4.2.Final'
-        lombokVersion = "1.18.20"
+        lombokVersion = '1.18.20'
     }
     repositories {
         mavenCentral()
@@ -53,15 +53,16 @@ subprojects {
 }
 
 project(':module-domain') {
-    // common 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
+    // domain 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        // QueryDSL
+
+        // for QueryDSL
+        implementation "com.querydsl:querydsl-core:${queryDslVersion}"
         implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
-        annotationProcessor(
-                'javax.persistence:javax.persistence-api',
-                'javax.annotation:javax.annotation-api',
-                "com.querydsl:querydsl-apt:${queryDslVersion}:jpa")
+        annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jpa"
+        annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+        annotationProcessor "jakarta.annotation:jakarta.annotation-api"
 
         //Gradle 5이상 부터 annotationProcessor , compoleOnly 등.. 어노테이션을 구별해서 추가해야함.(안그럴 시 Lombok Compile Error 발생)
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
@@ -76,13 +77,16 @@ project(':module-domain') {
 }
 
 project(':module-api') {
-    // user 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
+    // api 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
     dependencies {
         implementation "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-        implementation 'io.springfox:springfox-swagger2:2.6.1'
-        implementation 'io.springfox:springfox-swagger-ui:2.6.1'
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation project(':module-domain')
     }
+}
+
+// for QueryDSL
+task cleanGeneatedDir(type: Delete) {
+    delete file('src/main/generated')
 }

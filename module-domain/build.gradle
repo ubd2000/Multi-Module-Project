@@ -15,13 +15,9 @@ repositories {
 dependencies {
 }
 
-// QueryDSL
-sourceSets {
-    main {
-        java {
-            srcDirs = ["$projectDir/src/main/java", "$projectDir/build/generated"]
-        }
-    }
+// querydsl 적용
+clean {
+    delete file('src/main/generated') // 인텔리제이 Annotation processor 생성물 생성위치
 }
 
 test {

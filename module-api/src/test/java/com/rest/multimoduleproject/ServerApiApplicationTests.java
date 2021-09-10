@@ -1,10 +1,20 @@
 package com.rest.multimoduleproject;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rest.multimoduleproject.domain.user.dto.UserDto;
+import com.rest.multimoduleproject.domain.user.repository.UserRepository;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -12,23 +22,27 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 //@Transactional
 class ServerApiApplicationTests {
 
-   /* @Autowired
+    @Autowired
     private MockMvc mockMvc;
-
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Test
     public void signup() throws Exception {
-            MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            params.add("uid", "dosel2");
-            params.add("password", "dosel2");
-            params.add("name", "d123123");
-            mockMvc.perform(post("/v1/signup").params(params))
-                    .andDo(print())
-                    .andExpect(status().isOk());
-    }
 
+        UserDto.Request userDto = new UserDto.Request("ubd2000123", "111", "123");
+        String content = objectMapper.writeValueAsString(userDto);
+
+        mockMvc.perform(post("/v1/signup")
+                        .content(content)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+/*
     @Test
     public void singupFor() throws Exception {
         mockMvc.perform(post("/v1/signupfor"))

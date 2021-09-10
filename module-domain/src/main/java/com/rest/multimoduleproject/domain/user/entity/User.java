@@ -6,9 +6,7 @@ import javax.persistence.*;
 
 @Entity // jpa entity임을 알립니다.
 @Getter
-@Builder // builder를 사용할수 있게 합니다.
-@NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
-@AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 무분별한 생성자 생성 방지
 @Table(name = "user") // 'user' 테이블과 매핑됨을 명시
 public class User {
 
@@ -26,4 +24,11 @@ public class User {
     @Column(nullable = false, length = 100) // name column을 명시합니다. 필수이고 길이는 100입니다.
     private String name;
 
+    @Builder
+    public User(Long msrl, String uid, String password, String name) {
+        this.msrl = msrl;
+        this.uid = uid;
+        this.password = password;
+        this.name = name;
+    }
 }
