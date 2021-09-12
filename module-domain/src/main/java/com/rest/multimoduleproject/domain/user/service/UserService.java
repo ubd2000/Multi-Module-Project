@@ -25,18 +25,22 @@ public class UserService {
         return UserMapper.instance.toDto(user);
     }
 
-    public UserDto.Response findUserById(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(CUserNotFoundException::new);
+    public UserDto.Response findUserById(String userUid) {
+        User user = userRepository.findByUid(userUid).orElseThrow(CUserNotFoundException::new);
         return UserMapper.instance.toDto(user);
     }
 
     public void save(UserDto.Request userDto) {
-        Optional<User> optionalUser = userRepository.findByUserId(userDto.getUid());
-        optionalUser.ifPresent(findUser -> {
+        Optional<User> optionalUser = userRepository.findByUid(userDto.getUid());
+        optionalUser.ifPresent(user -> {
             throw new DataIntegrityViolationException();
         });
         User user = UserMapper.instance.toEntity(userDto);
         userRepository.save(user);
+    }
+
+    public void modifyUser(UserDto.Request userDto) {
+
     }
 
     public User init(Long msrl) {

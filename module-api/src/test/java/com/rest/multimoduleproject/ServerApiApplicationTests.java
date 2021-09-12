@@ -3,12 +3,14 @@ package com.rest.multimoduleproject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rest.multimoduleproject.domain.user.dto.UserDto;
 import com.rest.multimoduleproject.domain.user.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -32,7 +34,12 @@ class ServerApiApplicationTests {
     @Test
     public void signup() throws Exception {
 
-        UserDto.Request userDto = new UserDto.Request("ubd2000123", "111", "123");
+        UserDto.Request userDto = UserDto.Request.builder()
+                .uid("ubd2000123")
+                .password("111")
+                .name("123")
+                .build();
+
         String content = objectMapper.writeValueAsString(userDto);
 
         mockMvc.perform(post("/v1/signup")
@@ -42,24 +49,24 @@ class ServerApiApplicationTests {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-/*
+
     @Test
-    public void singupFor() throws Exception {
-        mockMvc.perform(post("/v1/signupfor"))
+    public void seletUser() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.get("/v1/user/dosel2"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-
     @Test
     public void modifyUser() throws Exception {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.add("uid", "dosel22");
+        params.add("uid", "ubd2000123");
         params.add("name", "eee123");
         mockMvc.perform(MockMvcRequestBuilders.put("/v1/user").params(params))
                 .andDo(print())
                 .andExpect(status().isOk());
 
     }
+    /*
 
     @Test
     public void userAllList() throws Exception {

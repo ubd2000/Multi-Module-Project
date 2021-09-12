@@ -26,14 +26,14 @@ public class UserDto {
     @Getter
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class Response {
-        private Long msrl;
+        private Long id;
         private String uid;
         private String password;
         private String name;
 
         @Builder
-        public Response(Long msrl, String uid, String password, String name) {
-            this.msrl = msrl;
+        public Response(Long id, String uid, String password, String name) {
+            this.id = id;
             this.uid = uid;
             this.password = password;
             this.name = name;

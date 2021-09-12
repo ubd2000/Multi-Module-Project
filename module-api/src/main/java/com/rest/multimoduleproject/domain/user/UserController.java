@@ -4,6 +4,7 @@ package com.rest.multimoduleproject.domain.user;
 import com.rest.multimoduleproject.domain.user.dto.UserDto;
 import com.rest.multimoduleproject.domain.user.entity.User;
 import com.rest.multimoduleproject.domain.user.service.UserService;
+import com.rest.multimoduleproject.response.CommonResult;
 import com.rest.multimoduleproject.response.ListResult;
 import com.rest.multimoduleproject.response.SingleResult;
 import com.rest.multimoduleproject.response.service.ResponseService;
@@ -21,6 +22,7 @@ public class UserController {
     private final ResponseService responseService;
 
     /**
+     * 전체 회원 조회
      *
      * @return
      */
@@ -31,17 +33,19 @@ public class UserController {
 
     /**
      * 회원 조회
-     * @param userId
+     *
+     * @param userUid
      * @return
      */
-    @GetMapping(value = "/user/{userId}")
-    public SingleResult<UserDto.Response> findUserById(@PathVariable Long userId) {
-        return responseService.getSingleResult(userService.findUserById(userId));
+    @GetMapping(value = "/user/{userUid}")
+    public SingleResult<UserDto.Response> findUserById(@PathVariable String userUid) {
+        return responseService.getSingleResult(userService.findUserById(userUid));
     }
 
     @PutMapping(value = "/user")
-    public User modifyUser(UserDto userDto) {
-        return null;
+    public CommonResult modifyUser(UserDto.Request userDto) {
+
+        return responseService.getSuccessResult();
     }
 
     @DeleteMapping(value = "/user/{uid}")
