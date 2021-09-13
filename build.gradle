@@ -61,7 +61,7 @@ subprojects {
     }
 }
 
-project(':module-domain') {
+project(':module-core') {
     // domain 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -79,7 +79,7 @@ project(':module-api') {
     // api 모듈에만 필요한 라이브러리가 발생하면 이곳에 추가한다.
     dependencies {
         implementation 'org.springframework.boot:spring-boot-starter-web'
-        implementation project(':module-domain')
+        implementation project(':module-core')
     }
 }
 
