@@ -42,9 +42,15 @@ public class UserController {
         return responseService.getSingleResult(userService.findUserById(userUid));
     }
 
+    /**
+     * 회원 수정
+     *
+     * @param userDto
+     * @return
+     */
     @PutMapping(value = "/user")
-    public CommonResult modifyUser(UserDto.Request userDto) {
-
+    public CommonResult modifyUser(@RequestBody UserDto.Request userDto) {
+        userService.modifyUser(userDto);
         return responseService.getSuccessResult();
     }
 
@@ -53,6 +59,11 @@ public class UserController {
         return null;
     }
 
+    /**
+     *
+     * @param pageable
+     * @return
+     */
     @GetMapping("/pageUsers")
     public Page<User> findAllUserPage(Pageable pageable) {
         return null;

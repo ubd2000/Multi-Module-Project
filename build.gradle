@@ -47,16 +47,18 @@ subprojects {
 
         testImplementation 'org.junit.jupiter:junit-jupiter:5.6.2'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
-        
-        //Gradle 5이상 부터 annotationProcessor , compoleOnly 등.. 어노테이션을 구별해서 추가해야함.(안그럴 시 Lombok Compile Error 발생)
-        compileOnly "org.projectlombok:lombok"
-        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 
+        implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+//        implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
         annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+        annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
         //Mapstruct 사용 중 Builder를 사용하기 위해선 아래에 lombok, binding 추가 해야 정상작동
         annotationProcessor "org.projectlombok:lombok"
-        annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
         testImplementation "org.projectlombok:lombok"
+        //Gradle 5이상 부터 annotationProcessor , compoleOnly 등.. 어노테이션을 구별해서 추가해야함.(안그럴 시 Lombok Compile Error 발생)
+        compileOnly "org.projectlombok:lombok"
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'io.jsonwebtoken:jjwt:0.9.1'
 
     }
 }

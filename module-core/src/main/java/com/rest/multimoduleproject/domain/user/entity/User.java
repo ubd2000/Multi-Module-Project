@@ -1,6 +1,10 @@
 package com.rest.multimoduleproject.domain.user.entity;
 
-import lombok.*;
+import com.rest.multimoduleproject.domain.user.dto.UserDto;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -31,4 +35,14 @@ public class User {
         this.password = password;
         this.name = name;
     }
+
+    public void modify(UserDto.Request userDto) {
+        if (userDto.getPassword() != null) {
+            this.password = userDto.getPassword();
+        }
+        if (userDto.getName() != null) {
+            this.name = userDto.getName();
+        }
+    }
+
 }

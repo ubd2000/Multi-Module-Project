@@ -3,8 +3,7 @@ package com.rest.multimoduleproject.domain.user.mapper;
 
 import com.rest.multimoduleproject.domain.user.dto.UserDto;
 import com.rest.multimoduleproject.domain.user.entity.User;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -21,6 +20,7 @@ import java.util.List;
 public interface UserMapper {
 
     List<UserDto.Response> toDto(List<User> user);
+
     UserDto.Response toDto(User user);
 
     /* 맵핑되지 않는 속성 무시 */
